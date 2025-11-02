@@ -1,0 +1,42 @@
+from typing import List
+
+class Solution:
+    def countUnguarded(self, m: int, n: int, guards: List[List[int]], walls: List[List[int]]) -> int:
+        li = [[1 for _ in range(n)] for _ in range(m)]
+        
+        # Mark guards and walls
+        for i, j in guards:
+            li[i][j] = "g"
+        for i, j in walls:
+            li[i][j] = "w"
+        
+        # Mark guarded cells
+        for i, j in guards:
+            # Up
+            for k in range(i-1, -1, -1):
+                if li[k][j] in ("w", "g"):
+                    break
+                li[k][j] = 0
+            # Down
+            for k in range(i+1, m):
+                if li[k][j] in ("w", "g"):
+                    break
+                li[k][j] = 0
+            # Left
+            for k in range(j-1, -1, -1):
+                if li[i][k] in ("w", "g"):
+                    break
+                li[i][k] = 0
+            # Right
+            for k in range(j+1, n):
+                if li[i][k] in ("w", "g"):
+                    break
+                li[i][k] = 0
+        
+        # Count unguarded cells
+        c = 0
+        for i in range(m):
+            for j in range(n):
+                if li[i][j] == 1:
+                    c += 1
+        return c
