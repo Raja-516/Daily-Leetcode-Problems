@@ -1,0 +1,23 @@
+'''class Solution:
+    def minNumberOperations(self, nums: List[int]) -> int:
+        mini = float('inf')
+        m=float('inf')
+        c=0
+        maxi=float('-inf')
+        for i in nums:
+            maxi=max(maxi,i)
+            if i<mini:
+                m=min(m,mini)
+                mini=float('inf')
+                c+=maxi
+                maxi=0
+        print(c,m,maxi)
+        return c-m+maxi'''
+class Solution:
+    def minNumberOperations(self, nums: List[int]) -> int:
+        res = nums[0]
+        for i in range(1, len(nums)):
+            if nums[i] > nums[i - 1]:
+                res += nums[i] - nums[i - 1]
+        return res
+        
